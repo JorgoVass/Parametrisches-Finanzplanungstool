@@ -1,0 +1,28 @@
+[
+  {
+    "rolle": "TV-Allgemein-2 E13",
+    "gehalt": 4700.0,
+    "startmonat": 1,
+    "endmonat": null
+  },
+  {
+    "rolle": "TV-\u00c4rzte \u00c43",
+    "gehalt": 9500.0,
+    "startmonat": 1,
+    "endmonat": null
+  },
+  {
+    "rolle": "TV-\u00c4rzte-2 \u00c43",
+    "gehalt": 9000.0,
+    "startmonat": 1,
+    "endmonat": null
+  },
+  {
+    "rolle": "TV-Allgemein E13",
+    "gehalt": 5000.0,
+    "start_jahr": 2024,
+    "start_monat": 1,
+    "end_jahr": null,
+    "end_monat": null
+  }
+]

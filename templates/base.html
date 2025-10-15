@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Finanzplanung{% endblock %}</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #F8F8FF; margin: 0; padding: 0; }
+        nav { background-color: #4B0082; color: white; padding: 15px; text-align: center; }
+        nav a { color: white; text-decoration: none; font-weight: bold; margin: 0 15px; }
+        nav a:hover { text-decoration: underline; }
+        .container { max-width: 900px; margin: 40px auto; padding: 20px; background-color: #FFFFFF; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="{{ url_for('home') }}">🏠 Startseite</a>
+        <a href="{{ url_for('monatsdaten') }}">📊 Monatsdaten</a>
+        <a href="{{ url_for('personal') }}">👥 Mitarbeiter</a>
+        <a href="{{ url_for('diagramm') }}">📈 Diagramm</a>
+        <a href="{{ url_for('economics') }}">💶 Wirtschaftlichkeit</a>
+        <a href="{{ url_for('raster') }}">🧮 Raster</a>
+    </nav>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+</body>
+</html>

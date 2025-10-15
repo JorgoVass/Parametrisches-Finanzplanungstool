@@ -1,0 +1,109 @@
+﻿{% extends "base.html" %}
+{% block title %}Monatsdaten{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2>📊 Übersicht der Monatsdaten</h2>
+
+  <p style="margin:0 0 10px 0; font-size:13px; color:#555;">
+    Hinweis: Die Werte werden aus <code>components</code> (Units, Preis, Fix/Variabel) <b>plus aktuellen Mitarbeiterkosten</b> serverseitig berechnet.
+  </p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Monat</th>
+        <th>Jahr</th>
+        <th>Umsatz (€)</th>
+        <th>Kosten (€)</th>
+        <th>Gewinn (€)</th>
+        <th>Aktion</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for e in daten %}
+      <tr>
+        <td>{{ e.monat }}</td>
+        <td>{{ e.jahr }}</td>
+        <td>{{ "%.2f"|format(e.revenue_calc) }}</td>
+        <td>{{ "%.2f"|format(e.costs_calc) }}</td>
+        <td style="font-weight:600; color: {{ 'green' if e.profit_calc >= 0 else 'red' }};">
+          {{ "%.2f"|format(e.profit_calc) }}
+        </td>
+        <td>
+          <a href="{{ url_for('bearbeiten', monat=e.monat, jahr=e.jahr) }}" class="edit-button">✏️ Bearbeiten</a>
+        </td>
+      </tr>
+      {% endfor %}
+      {% if daten|length == 0 %}
+      <tr>
+        <td colspan="6" style="padding:14px; color:#666;">Keine Daten vorhanden.</td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+  <div class="nav-links">
+    <a href="{{ url_for('home') }}" class="button-link">⏎ Zurück zur Startseite</a>
+  </div>
+</div>
+
+<style>
+  .container {
+    max-width: 900px;
+    margin: auto;
+    padding: 30px;
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 12px;
+  }
+  h2 {
+    text-align: center;
+    color: #4B0082;
+    margin-bottom: 20px;
+  }
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+    background-color: #F9F9FF;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 20px;
+  }
+  .data-table th, .data-table td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #DDD;
+  }
+  .data-table thead {
+    background-color: #9370DB;
+    color: white;
+  }
+  .data-table tbody tr:nth-child(even) { background-color: #F3F3FF; }
+  .data-table tbody tr:hover { background-color: #EDE7FF; }
+
+  .edit-button {
+    padding: 6px 12px;
+    background-color: #4B0082;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  .edit-button:hover { background-color: #6A0DAD; }
+
+  .button-link {
+    background-color: #9370DB;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color .3s ease;
+  }
+  .button-link:hover { background-color: #7B68EE; }
+
+  .nav-links { text-align: center; margin-top: 30px; }
+</style>
+{% endblock %}

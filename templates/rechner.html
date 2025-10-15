@@ -1,0 +1,72 @@
+﻿{% extends "base.html" %}
+{% block content %}
+
+<h2>Startup-Kostenrechner</h2>
+<form method="POST">
+  <h3>Fixkosten (monatlich)</h3>
+  <label>Miete (€):</label><input type="number" name="miete"><br>
+  <label>Gehälter (€):</label><input type="number" name="gehaelter"><br>
+  <label>Sonstige Fixkosten (€):</label><input type="number" name="sonstige_fix"><br>
+
+  <h3>Variable Kosten</h3>
+  <label>Kosten pro Kunde (€):</label><input type="number" name="var_kosten"><br>
+
+  <h3>Förderung</h3>
+  <label>Einmalige Förderung (€):</label><input type="number" name="foerderung"><br>
+
+  <h3>Umsatzannahmen</h3>
+  <label>Preis pro Therapie (€):</label><input type="number" name="preis"><br>
+  <label>Anzahl Kunden im 1. Monat:</label><input type="number" name="kunden_start"><br>
+  <label>Wachstum pro Monat (%):</label><input type="number" name="wachstum"><br>
+  <label>Zeitraum (Monate):</label><input type="number" name="zeitraum" value="12"><br>
+
+  <button type="submit">Berechnen</button>
+</form>
+
+{% if json_data %}
+  <div id="chart" style="margin-top: 50px;"></div>
+
+  <!-- D3.js einbinden -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+    const daten = {{ json_data | tojson }};
+    const width = 600;
+    const height = 400;
+    const margin = {top: 20, right: 20, bottom: 30, left: 50};
+
+    const svg = d3.select("#chart")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height);
+
+    const x = d3.scaleBand()
+      .domain(Object.keys(daten))
+      .range([margin.left, width - margin.right])
+      .padding(0.1);
+
+    const y = d3.scaleLinear()
+      .domain([0, d3.max(Object.values(daten))])
+      .range([height - margin.bottom, margin.top]);
+
+    svg.append("g")
+      .attr("transform", `translate(0,${height - margin.bottom})`)
+      .call(d3.axisBottom(x));
+
+    svg.append("g")
+      .attr("transform", `translate(${margin.left},0)`)
+      .call(d3.axisLeft(y));
+
+    svg.selectAll(".bar")
+      .data(Object.entries(daten))
+      .enter()
+      .append("rect")
+      .attr("class", "bar")
+      .attr("x", ([key]) => x(key))
+      .attr("y", ([, val]) => y(val))
+      .attr("width", x.bandwidth())
+      .attr("height", ([, val]) => y(0) - y(val))
+      .attr("fill", "steelblue");
+  </script>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,110 @@
+﻿{% extends "base.html" %}
+{% block title %}Mitarbeiterverwaltung{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>👥 Mitarbeiterverwaltung</h2>
+
+    <form method="POST" class="form-box">
+        <label>Rolle:</label>
+        <input type="text" name="rolle" required>
+
+        <label>Monatsgehalt (€):</label>
+        <input type="number" name="gehalt" step="0.01" required>
+
+        <div class="grid2">
+          <div>
+            <label>Startmonat (1–12):</label>
+            <input type="number" name="startmonat" min="1" max="12" required>
+          </div>
+          <div>
+            <label>Startjahr:</label>
+            <input type="number" name="startjahr" min="1900" max="2100" required>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div>
+            <label>Endmonat (optional, 1–12):</label>
+            <input type="number" name="endmonat" min="1" max="12">
+          </div>
+          <div>
+            <label>Endjahr (optional):</label>
+            <input type="number" name="endjahr" min="1900" max="2100">
+          </div>
+        </div>
+
+        <button type="submit" class="modern-button">➕ Hinzufügen</button>
+    </form>
+
+    <h3>Aktuelle Mitarbeiter</h3>
+    <table class="data-table">
+    <thead>
+        <tr>
+            <th>Rolle</th>
+            <th>Gehalt (€)</th>
+            <th>Beginn</th>
+            <th>Ende</th>
+            <th>Aktion</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for m in mitarbeiter %}
+        <tr>
+            <td>{{ m.rolle }}</td>
+            <td>{{ m.gehalt }}</td>
+            <td>
+                {% if m.startmonat and m.startjahr %}
+                  {{ "%02d"|format(m.startmonat) }}/{{ m.startjahr }}
+                {% elif m.startmonat %}
+                  {{ "%02d"|format(m.startmonat) }}/—
+                {% else %}
+                  —
+                {% endif %}
+            </td>
+            <td>
+                {% if m.endmonat and m.endjahr %}
+                  {{ "%02d"|format(m.endmonat) }}/{{ m.endjahr }}
+                {% elif m.endmonat or m.endjahr %}
+                  {{ m.endmonat if m.endmonat else "—" }}/{{ m.endjahr if m.endjahr else "—" }}
+                {% else %}
+                  unbefristet
+                {% endif %}
+            </td>
+            <td>
+                <form action="{{ url_for('personal_loeschen', index=loop.index0) }}" method="post" style="display:inline;">
+                    <button type="submit" class="delete-button" onclick="return confirm('Wirklich löschen?');">🗑️</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+    <div class="nav-links">
+        <a href="{{ url_for('home') }}" class="button-link">⏎ Zurück zur Startseite</a>
+    </div>
+</div>
+
+<style>
+    .container { max-width: 900px; margin: auto; padding: 30px; background-color: #FFFFFF; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-radius: 12px; }
+    h2, h3 { text-align: center; color: #4B0082; margin-bottom: 20px; }
+    .form-box { display: grid; gap: 12px; margin-bottom: 30px; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-box label { font-weight: bold; }
+    .form-box input { padding: 10px; border: 1px solid #CCC; border-radius: 6px; background-color: #F0F0FF; }
+    .modern-button { padding: 10px 20px; background-color: #9370DB; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; transition: background-color 0.3s ease; }
+    .modern-button:hover { background-color: #7B68EE; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 16px; background-color: #F9F9FF; border-radius: 8px; overflow: hidden; margin-top: 20px; }
+    .data-table th, .data-table td { padding: 12px 15px; text-align: center; border-bottom: 1px solid #DDD; }
+    .data-table thead { background-color: #9370DB; color: white; }
+    .data-table tbody tr:nth-child(even) { background-color: #F3F3FF; }
+    .data-table tbody tr:hover { background-color: #E0E0F9; }
+    .nav-links { text-align: center; margin-top: 30px; }
+    .delete-button { background: #e04c54; color: white; border: none; border-radius: 5px; padding: 6px 10px; cursor: pointer; font-size: 16px; transition: background 0.2s; }
+    .delete-button:hover { background: #b71c1c; }
+    .button-link { background-color: #9370DB; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold; transition: background-color 0.3s ease; }
+    .button-link:hover { background-color: #7B68EE; }
+    @media (max-width: 700px){ .grid2 { grid-template-columns: 1fr; } }
+</style>
+{% endblock %}

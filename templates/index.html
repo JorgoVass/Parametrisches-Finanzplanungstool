@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Startseite{% endblock %}
+{% block content %}
+
+<div class="container">
+  <h2>Monatliche Finanzplanung</h2>
+
+  <form action="/calculate" method="post">
+    <label>Jahr:</label>
+    <select name="jahr" required>
+      {% for y in range(2023, 2031) %}
+        <option value="{{ y }}" {% if y == current_year %}selected{% endif %}>{{ y }}</option>
+      {% endfor %}
+    </select>
+    <br><br>
+
+    <label>Monat:</label>
+    <select name="month" required>
+      <option>Januar</option><option>Februar</option><option>März</option><option>April</option>
+      <option>Mai</option><option>Juni</option><option>Juli</option><option>August</option>
+      <option>September</option><option>Oktober</option><option>November</option><option>Dezember</option>
+    </select>
+    <br><br>
+
+    <label>Einheiten:</label>
+    <input type="number" name="units" required><br><br>
+
+    <label>Preis pro Einheit (€):</label>
+    <input type="number" name="price" step="0.01" required><br><br>
+
+    <label>Fixkosten (€):</label>
+    <input type="number" name="fixed_costs" step="0.01" required><br><br>
+
+    <label>Variable Kosten pro Einheit (€):</label>
+    <input type="number" name="variable_costs" step="0.01" required><br><br>
+
+    <button type="submit" class="modern-button">Berechnen</button>
+  </form>
+</div>
+
+<style>
+  .container { max-width: 500px; margin: auto; padding: 30px; background-color: #FFFFFF; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-radius: 12px; }
+  h2 { text-align: center; color: #4B0082; margin-bottom: 20px; }
+  form label { display: block; margin-top: 15px; font-weight: bold; color: #333; }
+  form input, form select {
+    width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #CCC; border-radius: 4px; background-color: #F0F0FF;
+  }
+  .modern-button { background: #9370DB; color: white; border: none; padding: 10px; margin-top: 20px; width: 100%; font-size: 16px; border-radius: 6px; cursor: pointer; transition: background-color 0.3s ease; }
+  .modern-button:hover { background-color: #7B68EE; }
+</style>
+
+{% endblock %}
