@@ -42,10 +42,14 @@ def mitarbeiter_aktiv_im(monat: int, jahr: int, m: dict) -> bool:
     Rückwärtskompatibel: fehlen Jahresfelder, wird startjahr=1900, endjahr=None angenommen.
     """
     try:
-        startmonat = int(m.get("startmonat"))
-        if not (1 <= startmonat <= 12): return False
+        startmonat = m.get("startmonat")
+        if not startmonat or not isinstance(startmonat, int):
+            return False
+        if not (1 <= startmonat <= 12): 
+            return False
+            
         startjahr = m.get("startjahr")
-        startjahr = int(startjahr) if startjahr not in (None, "",) else 1900  # legacy fallback
+        startjahr = int(startjahr) if startjahr not in (None, "",) else 1900
 
         endmonat = m.get("endmonat")
         endmonat = int(endmonat) if (endmonat not in (None, "",)) else None
@@ -140,8 +144,23 @@ def monatsdaten():
     daten = safe_load_json(DATEN_DATEI, [])
     personal = safe_load_json(PERSONAL_DATEI, [])
 
+    # Jahre sammeln
+    jahre = sorted(list({int(d.get("jahr", 0)) for d in daten if "jahr" in d}))
+    if not jahre:
+        jahre = [datetime.now().year]
+
+    # Jahr-Auswahl aus Query-Parameter
+    jahr_auswahl = request.args.get("jahr", "alle")
+
+    # Filtern nach Jahr
+    if jahr_auswahl == "alle":
+        daten_gefiltert = daten
+    else:
+        jahr_auswahl_int = int(jahr_auswahl)
+        daten_gefiltert = [d for d in daten if int(d.get("jahr", 0)) == jahr_auswahl_int]
+
     daten_berechnet = []
-    for d in daten:
+    for d in daten_gefiltert:
         monat = d.get("monat")
         jahr  = int(d.get("jahr", 0))
         mnum  = convertiere_monat_to_num(monat)
@@ -174,13 +193,17 @@ def monatsdaten():
             "profit_calc": round(profit_calc, 2),
         })
 
+    # Sortierung nach Jahr und Monat
     daten_berechnet.sort(key=lambda x: (x["jahr"], convertiere_monat_to_num(x["monat"])))
-    return render_template("monatsdaten.html", daten=daten_berechnet)
+    
+    return render_template("monatsdaten.html", 
+                         daten=daten_berechnet,
+                         jahre=jahre,
+                         jahr_auswahl=jahr_auswahl)
 
 # --- personal (Endpoint explizit als 'personal') ---
 @app.route("/personal", methods=["GET", "POST"], endpoint="personal")
 def personal_view():
-    # Datei sicherstellen
     if not os.path.exists(PERSONAL_DATEI):
         with open(PERSONAL_DATEI, "w") as f:
             json.dump([], f)
@@ -190,7 +213,6 @@ def personal_view():
     if request.method == "POST":
         try:
             rolle = (request.form.get("rolle") or "").strip()
-
             gehalt_raw = (request.form.get("gehalt") or "").strip()
             startmonat_raw = (request.form.get("startmonat") or "").strip()
             startjahr_raw  = (request.form.get("startjahr") or "").strip()
@@ -224,7 +246,6 @@ def personal_view():
                     return "Fehler: Endmonat muss zwischen 1 und 12 liegen.", 400
                 if endjahr is None or not (1900 <= endjahr <= 2100):
                     return "Fehler: Endjahr muss zwischen 1900 und 2100 liegen.", 400
-                # Optionales Plausibilitäts-Check Ende >= Start
                 if _ym_to_ordinal(endmonat, endjahr) < _ym_to_ordinal(startmonat, startjahr):
                     return "Fehler: Ende liegt vor dem Beginn.", 400
 
@@ -308,22 +329,18 @@ def diagramm():
     daten = safe_load_json(DATEN_DATEI, [])
     personal = safe_load_json(PERSONAL_DATEI, [])
 
-    # Jahre sammeln
     jahre = sorted(list({int(d.get("jahr", 0)) for d in daten if "jahr" in d and isinstance(d.get("jahr"), int)}))
     if not jahre:
         jahre = [datetime.now().year]
 
-    # Jahr-Auswahl
     jahr_auswahl = request.args.get("jahr", str(jahre[-1]))
 
-    # Filtern nach Jahr
     if jahr_auswahl == "alle":
         daten_jahr = daten
     else:
         jahr_auswahl_int = int(jahr_auswahl)
         daten_jahr = [d for d in daten if int(d.get("jahr", 0)) == jahr_auswahl_int]
 
-    # Sortierung
     if jahr_auswahl == "alle":
         daten_sorted = sorted(
             daten_jahr,
@@ -339,10 +356,8 @@ def diagramm():
             if d["monat"].strip().lower() in monats_sortierung_lower else 99
         )
 
-    # X-Achsen-Kategorien (Labels)
     monate = [f"{d['monat']} {d['jahr']}" for d in daten_sorted] if jahr_auswahl == "alle" else [d["monat"] for d in daten_sorted]
 
-    # Dynamische Neu-Berechnung aus Komponenten (Fallback + Flag-Logik)
     revenues = []
     costs_liste = []
     profits = []
@@ -352,7 +367,6 @@ def diagramm():
         j = int(d.get("jahr", jahre[-1]))
         mnum = convertiere_monat_to_num(d["monat"])
 
-        # Personalkosten (mit Jahr-Logik)
         pers = berechne_personalkosten(mnum, j, personal)
         personalkosten_liste.append(pers)
 
@@ -380,7 +394,6 @@ def diagramm():
             costs_liste.append(cost_effect)
             profits.append(prof_effect)
 
-    # Kumulierte Gewinne & Break-Even (erstes Mal >= 0)
     kumulierte_gewinn = []
     s = 0.0
     break_even_monat = None
@@ -390,7 +403,6 @@ def diagramm():
         if break_even_monat is None and s >= 0:
             break_even_monat = monate[i] if i < len(monate) else None
 
-    # --- Plot ---
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=monate, y=revenues,            mode='lines+markers', name='Umsatz'))
     fig.add_trace(go.Scatter(x=monate, y=costs_liste,         mode='lines+markers', name='Kosten'))
@@ -398,10 +410,8 @@ def diagramm():
     fig.add_trace(go.Scatter(x=monate, y=personalkosten_liste,mode='lines+markers', name='Mitarbeiterkosten'))
     fig.add_trace(go.Scatter(x=monate, y=kumulierte_gewinn,   mode='lines+markers', name='Kumul. Gewinn', line=dict(dash="dash")))
 
-    # X-Achse als Kategorie in deiner Reihenfolge pinnen
     fig.update_xaxes(type="category", categoryorder="array", categoryarray=monate)
 
-    # Vertikale Break-Even-Linie (yref='paper' → volle Höhe)
     if break_even_monat is not None:
         fig.update_layout(shapes=[
             dict(
@@ -438,192 +448,15 @@ def diagramm():
         jahr_auswahl=jahr_auswahl
     )
 
-# ---------- ECONOMICS (dein bestehender Block; unverändert gelassen) ----------
-def _npv(series, r):
-    return sum(v / ((1 + r) ** t) for t, v in enumerate(series))
-
-def _cum(xs):
-    s = 0
-    out = []
-    for v in xs:
-        s += v
-        out.append(s)
-    return out
-
-def economics_calculation(p):
-    T = int(p["time_horizon_years"])
-    r = float(p["discount_rate"])
-
-    surgery_cost = (
-        p["or_time_min"] * p["or_cost_per_min"]
-        + p["surgeon_fee"] + p["anesthesia_fee"] + p["hospital_case_fee"]
-        + p["consumables_cost"]
-        + p["post_op_days"] * p["post_op_daily_cost"]
-        + p["implant_unit_cost"]
-        + p["complication_prob"] * p["complication_cost"]
-    )
-
-    payer_op   = p["reimb_rate_surgery"] * surgery_cost
-    patient_op = surgery_cost - payer_op + p["patient_copay_flat"] * p["post_op_days"]
-
-    followup = p["followup_per_year"] * p["followup_cost_each"]
-    repl_years = set(range(p["device_lifetime_years"], T + 1, p["device_lifetime_years"]))
-
-    impl_total   = [surgery_cost] + [0]*T
-    impl_payer   = [payer_op] + [0]*T
-    impl_patient = [patient_op] + [0]*T
-    for t in range(1, T + 1):
-        repl = p["implant_unit_cost"] if t in repl_years else 0
-        extra = followup + repl
-        impl_total[t]   += extra
-        payer_extra     = p["reimb_rate_surgery"] * (followup + repl)
-        impl_payer[t]   += payer_extra
-        impl_patient[t] += extra - payer_extra
-
-    cons_y = (12 * p["monthly_supplies_cost"] + 12 * p["monthly_care_time_cost"] + p["annual_complication_cost_conservative"])
-    cons_total   = [0] + [cons_y]*T
-    cons_payer   = [0] + [p["reimb_rate_conservative"] * cons_y]*T
-    cons_patient = [cons_total[t] - cons_payer[t] for t in range(T+1)]
-
-    npv_dict = {
-        "implant_total":   _npv(impl_total, r),
-        "conserv_total":   _npv(cons_total, r),
-        "implant_payer":   _npv(impl_payer, r),
-        "conserv_payer":   _npv(cons_payer, r),
-        "implant_patient": _npv(impl_patient, r),
-        "conserv_patient": _npv(cons_patient, r),
-    }
-
-    cum_impl = _cum(impl_total)
-    cum_cons = _cum(cons_total)
-    years = list(range(0, T + 1))
-    breakeven_year = None
-    for t in range(0, T + 1):
-        if cum_impl[t] <= cum_cons[t]:
-            breakeven_year = t
-            break
-
-    unit_margin = p["selling_price_implant"] - p["cogs_implant"] - p["sales_cost_per_case"]
-    breakeven_units = math.ceil(max(1.0, p["overhead_per_year"] / max(1e-9, unit_margin)))
-
-    fig = go.Figure()
-    fig.add_trace(go.Scatter(x=years, y=cum_impl, mode="lines+markers", name="Implantat (kumuliert)"))
-    fig.add_trace(go.Scatter(x=years, y=cum_cons, mode="lines+markers", name="Konservativ (kumuliert)"))
-    if breakeven_year is not None:
-        y_min = min(cum_impl + cum_cons)
-        y_max = max(cum_impl + cum_cons)
-        fig.add_trace(go.Scatter(
-            x=[breakeven_year, breakeven_year],
-            y=[y_min, y_max],
-            mode="lines",
-            name=f"Break-Even Jahr {breakeven_year}",
-            line=dict(width=2, dash="dot")
-        ))
-    fig.update_layout(xaxis_title="Jahr", yaxis_title="€", template="plotly_white", margin=dict(t=30))
-    plot_html = pio.to_html(fig, full_html=False)
-
-    return {
-        "plot_html": plot_html,
-        "breakeven_year": breakeven_year,
-        "npv": npv_dict,
-        "startup": {"unit_margin": unit_margin, "breakeven_units": breakeven_units}
-    }
-
-@app.route("/economics", methods=["GET", "POST"])
-def economics():
+# ===== Kostenvergleich: OP vs. Konservativ (Jahresvergleich, vereinfacht) =====
+@app.route("/kostenvergleich", methods=["GET","POST"])
+def kostenvergleich():
     defaults = {
-        "time_horizon_years": 10,
-        "discount_rate": 0.03,
-        "payer_type": "GKV",
-        "reimb_rate_surgery": 0.90,
-        "reimb_rate_conservative": 0.70,
-        "patient_copay_flat": 10.0,
-
-        "implant_unit_cost": 2600.0,
-        "device_lifetime_years": 7,
-        "followup_per_year": 2,
-        "followup_cost_each": 80.0,
-        "complication_prob": 0.05,
-        "complication_cost": 600.0,
-
-        "or_time_min": 90,
-        "or_cost_per_min": 20.0,
-        "surgeon_fee": 600.0,
-        "anesthesia_fee": 300.0,
-        "hospital_case_fee": 2500.0,
-        "consumables_cost": 180.0,
-        "post_op_days": 2,
-        "post_op_daily_cost": 350.0,
-
-        "monthly_supplies_cost": 120.0,
-        "monthly_care_time_cost": 0.0,
-        "annual_complication_cost_conservative": 150.0,
-
-        "selling_price_implant": 4200.0,
-        "cogs_implant": 1900.0,
-        "sales_cost_per_case": 200.0,
-        "overhead_per_year": 350000.0
-    }
-
-    if request.method == "POST":
-        def getf(name, typ=float):
-            val = request.form.get(name, "")
-            if val == "": return defaults[name]
-            return typ(val)
-
-        params = defaults.copy()
-        params.update({
-            "time_horizon_years": getf("time_horizon_years", int),
-            "discount_rate": getf("discount_rate"),
-            "payer_type": request.form.get("payer_type", defaults["payer_type"]),
-            "reimb_rate_surgery": getf("reimb_rate_surgery"),
-            "reimb_rate_conservative": getf("reimb_rate_conservative"),
-            "patient_copay_flat": getf("patient_copay_flat"),
-
-            "implant_unit_cost": getf("implant_unit_cost"),
-            "device_lifetime_years": getf("device_lifetime_years", int),
-            "followup_per_year": getf("followup_per_year", int),
-            "followup_cost_each": getf("followup_cost_each"),
-            "complication_prob": getf("complication_prob"),
-            "complication_cost": getf("complication_cost"),
-
-            "or_time_min": getf("or_time_min", int),
-            "or_cost_per_min": getf("or_cost_per_min"),
-            "surgeon_fee": getf("surgeon_fee"),
-            "anesthesia_fee": getf("anesthesia_fee"),
-            "hospital_case_fee": getf("hospital_case_fee"),
-            "consumables_cost": getf("consumables_cost"),
-            "post_op_days": getf("post_op_days", int),
-            "post_op_daily_cost": getf("post_op_daily_cost"),
-
-            "monthly_supplies_cost": getf("monthly_supplies_cost"),
-            "monthly_care_time_cost": getf("monthly_care_time_cost"),
-            "annual_complication_cost_conservative": getf("annual_complication_cost_conservative"),
-
-            "selling_price_implant": getf("selling_price_implant"),
-            "cogs_implant": getf("cogs_implant"),
-            "sales_cost_per_case": getf("sales_cost_per_case"),
-            "overhead_per_year": getf("overhead_per_year")
-        })
-
-        result = economics_calculation(params)
-        return render_template("economics.html", params=params, **result)
-
-    return render_template("economics.html", params=defaults, plot_html=None, breakeven_year=None,
-                           npv=None, startup=None)
-
-# ===== Raster: Jährlicher Vergleich (ohne Post-OP-Tage) =====
-def _calc_surgery_cost_min(params):
-    return params["surgeon_fee"] + params["anesthesia_fee"] + params["consumables_cost"] + params["implant_unit_cost"]
-
-def _monthly_conservative_min(params):
-    return params["monthly_supplies_cost"] + params["monthly_care_time_cost"]
-
-@app.route("/raster", methods=["GET","POST"])
-def raster():
-    defaults = {
-        "implant_unit_cost": 2600.0, "surgeon_fee": 600.0, "anesthesia_fee": 300.0, "consumables_cost": 180.0,
-        "monthly_supplies_cost": 120.0, "monthly_care_time_cost": 0.0, "surgery_month": 3
+        "implant_unit_cost": 2600.0, 
+        "surgeon_fee": 600.0, 
+        "anesthesia_fee": 300.0, 
+        "monthly_supplies_cost": 120.0, 
+        "monthly_care_time_cost": 50.0,
     }
 
     def getf(name, typ=float):
@@ -637,31 +470,314 @@ def raster():
             "implant_unit_cost": getf("implant_unit_cost"),
             "surgeon_fee": getf("surgeon_fee"),
             "anesthesia_fee": getf("anesthesia_fee"),
-            "consumables_cost": getf("consumables_cost"),
             "monthly_supplies_cost": getf("monthly_supplies_cost"),
             "monthly_care_time_cost": getf("monthly_care_time_cost"),
-            "surgery_month": getf("surgery_month", int),
         })
     else:
         params = defaults
 
-    cons_year = 12.0 * _monthly_conservative_min(params)
-    op_year   = _calc_surgery_cost_min(params)
-    totals = {"cons": round(cons_year, 2), "op": round(op_year, 2), "delta": round(op_year - cons_year, 2)}
+    # --- BERECHNUNG (Jahresvergleich) ---
+    op_year = params["implant_unit_cost"] + params["surgeon_fee"] + params["anesthesia_fee"]
+    cons_monthly = params["monthly_supplies_cost"] + params["monthly_care_time_cost"]
+    cons_year = cons_monthly * 12
 
+    # Delta
+    delta = op_year - cons_year
+
+    # --- PLOTLY DIAGRAMM ---
     fig = go.Figure()
-    fig.add_trace(go.Bar(name="Konservativ (Jahr)", x=["Konservativ"], y=[totals["cons"]]))
-    fig.add_trace(go.Bar(name="OP (Jahr)",          x=["OP"],           y=[totals["op"]]))
-    fig.update_layout(barmode="group", xaxis_title="Szenario", yaxis_title="Kosten im Jahr (€)",
-                      template="plotly_white", margin=dict(t=30),
-                      showlegend=True, legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1))
-    delta_text = f"Δ (OP − Kons.): {totals['delta']:+.2f} €"
-    y_max = max(totals["cons"], totals["op"])
-    x_pos = "Konservativ" if totals["cons"] >= totals["op"] else "OP"
-    fig.add_annotation(x=x_pos, y=y_max, yshift=10, text=delta_text, showarrow=False, bgcolor="rgba(255,255,255,0.85)")
+    
+    fig.add_trace(go.Bar(
+        x=["Operation"],
+        y=[op_year],
+        name="Operation",
+        marker_color="#9370DB",
+        text=[f"{op_year:,.2f} €"],
+        textposition="outside"
+    ))
+    
+    fig.add_trace(go.Bar(
+        x=["Konservativ"],
+        y=[cons_year],
+        name="Konservativ",
+        marker_color="#FF6B6B",
+        text=[f"{cons_year:,.2f} €"],
+        textposition="outside"
+    ))
+    
+    fig.update_layout(
+        xaxis_title="Szenario",
+        yaxis_title="Kosten im Jahr (€)",
+        template="plotly_white",
+        margin=dict(t=40, b=60),
+        showlegend=False,
+        barmode="group"
+    )
+    
+    
     plot_html = pio.to_html(fig, full_html=False)
+    
+    # --- ERGEBNISSE ---
+    results = {
+        "op_year": round(op_year, 2),
+        "cons_year": round(cons_year, 2),
+        "cons_monthly": round(cons_monthly, 2),
+        "delta": round(delta, 2),
+    }
+    
+    return render_template("kostenvergleich.html", params=params, results=results, plot_html=plot_html)
 
-    return render_template("raster.html", params=params, totals=totals, plot_html=plot_html)
+# ===== SZENARIEN-VERGLEICH =====
+@app.route("/szenarien", methods=["GET", "POST"])
+def szenarien():
+    """
+    Vergleicht 3 Szenarien (Pessimistisch/Realistisch/Optimistisch)
+    basierend auf den aktuellen Monatsdaten mit verschiedenen Faktoren.
+    """
+    daten = safe_load_json(DATEN_DATEI, [])
+    personal = safe_load_json(PERSONAL_DATEI, [])
+    
+    if not daten:
+        return render_template("szenarien.html", 
+                             plot_html=None, 
+                             no_data=True,
+                             results=None)
+    
+    # Szenarien-Definitionen (Faktoren auf Units und Kosten)
+    szenarien_params = {
+        "Pessimistisch": {
+            "units_faktor": 0.7,
+            "preis_faktor": 0.95,
+            "fixkosten_faktor": 1.15,
+            "varkosten_faktor": 1.10,
+            "color": "#E57373"
+        },
+        "Realistisch": {
+            "units_faktor": 1.0,
+            "preis_faktor": 1.0,
+            "fixkosten_faktor": 1.0,
+            "varkosten_faktor": 1.0,
+            "color": "#FFB74D"
+        },
+        "Optimistisch": {
+            "units_faktor": 1.3,
+            "preis_faktor": 1.05,
+            "fixkosten_faktor": 0.95,
+            "varkosten_faktor": 0.90,
+            "color": "#81C784"
+        }
+    }    
+    # Jahre sammeln
+    jahre = sorted(list({int(d.get("jahr", 0)) for d in daten}))
+    if not jahre:
+        jahre = [datetime.now().year]
+    
+    jahr_auswahl = request.args.get("jahr", str(jahre[-1]))
+    
+    # Filtern nach Jahr
+    if jahr_auswahl == "alle":
+        daten_jahr = daten
+    else:
+        jahr_auswahl_int = int(jahr_auswahl)
+        daten_jahr = [d for d in daten if int(d.get("jahr", 0)) == jahr_auswahl_int]
+    
+    # Sortierung
+    if jahr_auswahl == "alle":
+        daten_sorted = sorted(daten_jahr, key=lambda d: (int(d.get("jahr", 0)), convertiere_monat_to_num(d["monat"])))
+    else:
+        monats_sortierung_lower = ["januar", "februar", "märz", "april", "mai", "juni",
+                                   "juli", "august", "september", "oktober", "november", "dezember"]
+        daten_sorted = sorted(daten_jahr, key=lambda d: monats_sortierung_lower.index(d["monat"].strip().lower())
+                            if d["monat"].strip().lower() in monats_sortierung_lower else 99)
+    
+    # X-Achsen-Labels
+    monate = [f"{d['monat']} {d['jahr']}" for d in daten_sorted] if jahr_auswahl == "alle" else [d["monat"] for d in daten_sorted]
+    
+    # Berechnung für jedes Szenario
+    szenarien_ergebnisse = {}
+    
+    for szenario_name, params in szenarien_params.items():
+        profits = []
+        
+        for d in daten_sorted:
+            j = int(d.get("jahr", jahre[-1]))
+            mnum = convertiere_monat_to_num(d["monat"])
+            pers = berechne_personalkosten(mnum, j, personal)
+            
+            comps = d.get("components") or {}
+            units = comps.get("units")
+            price = comps.get("price")
+            fixed_costs = comps.get("fixed_costs")
+            variable_costs = comps.get("variable_costs")
+            
+            if None not in (units, price, fixed_costs, variable_costs):
+                # Szenario-Faktoren anwenden
+                units_adj = float(units) * params["units_faktor"]
+                price_adj = float(price) * params["preis_faktor"]
+                fixed_adj = float(fixed_costs) * params["fixkosten_faktor"]
+                var_adj = float(variable_costs) * params["varkosten_faktor"]
+                
+                rev = units_adj * price_adj
+                cost = fixed_adj + (var_adj * units_adj) + float(pers)
+                prof = rev - cost
+                profits.append(prof)
+            else:
+                profits.append(0.0)
+        
+        # Kumulierte Gewinne
+        kumuliert = []
+        s = 0.0
+        break_even_monat = None
+        break_even_index = None
+        
+        for i, p in enumerate(profits):
+            s += p
+            kumuliert.append(s)
+            if break_even_monat is None and s >= 0:
+                break_even_monat = monate[i] if i < len(monate) else None
+                break_even_index = i
+        
+        # Gesamt-Gewinn
+        total_profit = sum(profits)
+        
+        szenarien_ergebnisse[szenario_name] = {
+            "kumuliert": kumuliert,
+            "break_even_monat": break_even_monat,
+            "break_even_index": break_even_index,
+            "total_profit": round(total_profit, 2),
+            "color": params["color"]
+        }
+    
+    # Plotly Figure
+    fig = go.Figure()
+    
+    for szenario_name, ergebnis in szenarien_ergebnisse.items():
+        fig.add_trace(go.Scatter(
+            x=monate,
+            y=ergebnis["kumuliert"],
+            mode='lines+markers',
+            name=szenario_name,
+            line=dict(width=3, color=ergebnis["color"]),
+            marker=dict(size=8)
+        ))
+        
+        # Break-Even Marker
+        if ergebnis["break_even_index"] is not None:
+            idx = ergebnis["break_even_index"]
+            fig.add_trace(go.Scatter(
+                x=[monate[idx]],
+                y=[ergebnis["kumuliert"][idx]],
+                mode='markers+text',
+                marker=dict(size=15, color=ergebnis["color"], symbol='star'),
+                text=[f"✓ {szenario_name}"],
+                textposition="top center",
+                showlegend=False,
+                hoverinfo='skip'
+            ))
+    
+    # Null-Linie
+    fig.add_hline(y=0, line_dash="dash", line_color="gray", opacity=0.5)
+    
+    fig.update_xaxes(type="category", categoryorder="array", categoryarray=monate)
+    fig.update_layout(
+        title="Kumulierter Gewinn: Szenarien-Vergleich",
+        xaxis_title="Monat",
+        yaxis_title="Kumulierter Gewinn (€)",
+        template="plotly_white",
+        margin=dict(t=80, b=60),
+        hovermode="x unified",
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
+        )
+    )
+    
+    plot_html = pio.to_html(fig, full_html=False)
+    
+    return render_template("szenarien.html", 
+                         plot_html=plot_html,
+                         results=szenarien_ergebnisse,
+                         jahre=jahre,
+                         jahr_auswahl=jahr_auswahl,
+                         no_data=False)
+
+
+# --- CSV EXPORT ---
+@app.route("/export_csv")
+def export_csv():
+    """Exportiert Monatsdaten als CSV"""
+    import csv
+    from io import StringIO
+    from flask import make_response
+    
+    daten = safe_load_json(DATEN_DATEI, [])
+    personal = safe_load_json(PERSONAL_DATEI, [])
+    
+    # Jahr-Filter
+    jahr_auswahl = request.args.get("jahr", "alle")
+    
+    if jahr_auswahl == "alle":
+        daten_gefiltert = daten
+    else:
+        jahr_auswahl_int = int(jahr_auswahl)
+        daten_gefiltert = [d for d in daten if int(d.get("jahr", 0)) == jahr_auswahl_int]
+    
+    # Daten berechnen (gleiche Logik wie monatsdaten)
+    daten_berechnet = []
+    for d in daten_gefiltert:
+        monat = d.get("monat")
+        jahr = int(d.get("jahr", 0))
+        mnum = convertiere_monat_to_num(monat)
+        
+        comps = d.get("components") or {}
+        units = comps.get("units")
+        price = comps.get("price")
+        fixed_costs = comps.get("fixed_costs")
+        variable_costs = comps.get("variable_costs")
+        
+        pers = berechne_personalkosten(mnum, jahr, personal)
+        
+        if None not in (units, price, fixed_costs, variable_costs):
+            revenue_calc = float(units) * float(price)
+            costs_calc = float(fixed_costs) + float(variable_costs) * float(units) + float(pers)
+            profit_calc = revenue_calc - costs_calc
+        else:
+            revenue_calc = float(d.get("revenue", 0.0))
+            costs_stored = float(d.get("costs", 0.0))
+            if not d.get("personnel_included", False):
+                costs_stored += float(pers)
+            costs_calc = costs_stored
+            profit_calc = revenue_calc - costs_calc
+        
+        daten_berechnet.append({
+            "Jahr": jahr,
+            "Monat": monat,
+            "Umsatz": round(revenue_calc, 2),
+            "Kosten": round(costs_calc, 2),
+            "Gewinn": round(profit_calc, 2),
+            "Personalkosten": round(pers, 2)
+        })
+    
+    # Sortieren
+    daten_berechnet.sort(key=lambda x: (x["Jahr"], convertiere_monat_to_num(x["Monat"])))
+    
+    # CSV erstellen
+    si = StringIO()
+    if daten_berechnet:
+        fieldnames = ["Jahr", "Monat", "Umsatz", "Kosten", "Gewinn", "Personalkosten"]
+        writer = csv.DictWriter(si, fieldnames=fieldnames, delimiter=';')
+        writer.writeheader()
+        writer.writerows(daten_berechnet)
+    
+    # Response erstellen
+    output = make_response(si.getvalue())
+    output.headers["Content-Disposition"] = f"attachment; filename=monatsdaten_{jahr_auswahl}.csv"
+    output.headers["Content-type"] = "text/csv; charset=utf-8"
+    
+    return output
 
 if __name__ == "__main__":
     app.run(debug=True)

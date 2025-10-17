@@ -3,39 +3,99 @@
 {% block content %}
 
 <div class="container">
-  <form method="get" action="{{ url_for('diagramm') }}" style="margin-bottom: 25px;">
-    <select name="jahr" class="modern-select">
+  <!-- Jahr-Filter (mit auto-submit) -->
+    <h2>Finanzverlauf</h2>
+
+  
+  <form method="get" action="{{ url_for('diagramm') }}" style="margin-bottom: 25px; text-align: center;">
+    <label style="font-weight: 600; margin-right: 10px;">Jahr anzeigen:</label>
+    <select name="jahr" class="jahr-select" onchange="this.form.submit()">
       <option value="alle" {% if jahr_auswahl == 'alle' %}selected{% endif %}>Alle Jahre</option>
       {% for y in jahre %}
         <option value="{{ y }}" {% if y|string == jahr_auswahl|string %}selected{% endif %}>{{ y }}</option>
       {% endfor %}
     </select>
-    <button type="submit" class="modern-button">Anzeigen</button>
   </form>
 
-  <h2>Aktueller Finanzverlauf</h2>
-  <div>
+  
+  <div class="plot-box">
     {{ plot_html|safe }}
   </div>
+  
   {% if break_even_monat %}
-    <p style="color:green; font-weight:bold;">✅ Break-Even erreicht in: <strong>{{ break_even_monat }}</strong></p>
+    <p style="color:green; font-weight:bold; text-align: center; margin-top: 20px;">
+      Break-Even erreicht in: <strong>{{ break_even_monat }}</strong>
+    </p>
   {% else %}
-    <p style="color:red;">❌ Break-Even wurde noch nicht erreicht.</p>
+    <p style="color:red; text-align: center; margin-top: 20px;">
+      Break-Even wurde noch nicht erreicht.
+    </p>
   {% endif %}
-</div>
 
-<div class="nav-links">
-  <a href="{{ url_for('home') }}" class="button-link">⏎ Neue Eingabe</a>
+  <div class="nav-links">
+    <a href="{{ url_for('home') }}" class="button-link">Zurück zur Startseite</a>
+    <a href="{{ url_for('monatsdaten') }}" class="button-link">Zu den Monatsdaten</a>
+  </div>
 </div>
 
 <style>
-  .container { max-width:1020px; margin:auto; padding:30px; background-color:#FFFFFF; box-shadow:0 4px 12px rgba(0,0,0,0.1); border-radius:12px; }
-  h2 { text-align:center; color:#4B0082; }
-  .nav-links { display:flex; justify-content:center; gap:20px; margin-top:30px; }
-  .button-link { background-color:#9370DB; color:white; padding:10px 20px; border-radius:6px; text-decoration:none; font-weight:bold; transition:.3s; }
-  .button-link:hover { background-color:#7B68EE; }
-  .modern-select { width:100%; padding:8px; border:1px solid #CCC; border-radius:6px; background-color:#F0F0FF; font-size:16px; color:#333; }
-  .modern-button { background:#9370DB; color:white; border:none; padding:10px; margin-top:20px; width:100%; font-size:16px; border-radius:6px; cursor:pointer; transition:.3s; }
-  .modern-button:hover { background-color:#7B68EE; }
+  .container { 
+    max-width: 1100px; 
+    margin: auto; 
+    padding: 30px; 
+    background-color: #FFFFFF; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+    border-radius: 12px; 
+  }
+  
+  h2 { 
+    text-align: center; 
+    color: #4B0082; 
+    margin-bottom: 25px;
+  }
+
+  .jahr-select {
+    padding: 8px 16px;
+    border: 2px solid #667eea;
+    border-radius: 6px;
+    font-size: 15px;
+    background: white;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+  }
+
+  .jahr-select:hover {
+    border-color: #764ba2;
+  }
+
+  .plot-box {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    margin-top: 20px;
+  }
+
+  .nav-links { 
+    display: flex; 
+    justify-content: center; 
+    gap: 15px; 
+    margin-top: 30px; 
+  }
+  
+  .button-link { 
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; 
+    padding: 10px 20px; 
+    border-radius: 8px; 
+    text-decoration: none; 
+    font-weight: bold; 
+    transition: all 0.2s ease; 
+  }
+  
+  .button-link:hover { 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+  }
 </style>
 {% endblock %}
