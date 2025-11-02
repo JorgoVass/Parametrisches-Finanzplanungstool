@@ -31,7 +31,7 @@ def safe_load_json(path, default):
     except json.JSONDecodeError:
         return default
 
-# ===== Variante A (mit Jahr): Mitarbeiter mit (rolle, gehalt, startmonat, startjahr, optional endmonat, endjahr) =====
+# =====  Mitarbeiter =====
 def _ym_to_ordinal(monat:int, jahr:int) -> int:
     """Wandelt (Monat, Jahr) in fortlaufenden Index (Jahre*12 + Monat) um."""
     return int(jahr) * 12 + int(monat)
@@ -138,7 +138,7 @@ def bearbeiten():
 
     return render_template("bearbeiten.html", eintrag=eintrag)
 
-# --- monatsdaten (serverseitig berechnet aus components + aktuellen Personalkosten) ---
+# --- monatsdaten  ---
 @app.route("/monatsdaten")
 def monatsdaten():
     daten = safe_load_json(DATEN_DATEI, [])
@@ -149,7 +149,7 @@ def monatsdaten():
     if not jahre:
         jahre = [datetime.now().year]
 
-    # Jahr-Auswahl aus Query-Parameter
+    # Jahr-Auswahl
     jahr_auswahl = request.args.get("jahr", "alle")
 
     # Filtern nach Jahr
@@ -201,7 +201,7 @@ def monatsdaten():
                          jahre=jahre,
                          jahr_auswahl=jahr_auswahl)
 
-# --- personal (Endpoint explizit als 'personal') ---
+# --- personal ---
 @app.route("/personal", methods=["GET", "POST"], endpoint="personal")
 def personal_view():
     if not os.path.exists(PERSONAL_DATEI):
@@ -448,7 +448,7 @@ def diagramm():
         jahr_auswahl=jahr_auswahl
     )
 
-# ===== Kostenvergleich: OP vs. Konservativ (Jahresvergleich, vereinfacht) =====
+# ===== Kostenvergleich: OP vs. Konservativ =====
 @app.route("/kostenvergleich", methods=["GET","POST"])
 def kostenvergleich():
     defaults = {
@@ -476,7 +476,7 @@ def kostenvergleich():
     else:
         params = defaults
 
-    # --- BERECHNUNG (Jahresvergleich) ---
+    # --- BERECHNUNG ---
     op_year = params["implant_unit_cost"] + params["surgeon_fee"] + params["anesthesia_fee"]
     cons_monthly = params["monthly_supplies_cost"] + params["monthly_care_time_cost"]
     cons_year = cons_monthly * 12
@@ -491,7 +491,7 @@ def kostenvergleich():
         x=["Operation"],
         y=[op_year],
         name="Operation",
-        marker_color="#9370DB",
+        marker_color="#779FB5",  
         text=[f"{op_year:,.2f} €"],
         textposition="outside"
     ))
@@ -500,7 +500,7 @@ def kostenvergleich():
         x=["Konservativ"],
         y=[cons_year],
         name="Konservativ",
-        marker_color="#FF6B6B",
+        marker_color="#FF6B6B",  
         text=[f"{cons_year:,.2f} €"],
         textposition="outside"
     ))
@@ -514,6 +514,19 @@ def kostenvergleich():
         barmode="group"
     )
     
+    # Delta
+    y_max = max(op_year, cons_year)
+    delta_text = f"(OP − Konservativ): {delta:+,.2f} €"
+    fig.add_annotation(
+        x=0.5, xref="paper",
+        y=y_max * 1.1, yref="y",
+        text=delta_text,
+        showarrow=False,
+        bgcolor="rgba(255,255,255,0.95)",
+        bordercolor="#002F6C",  
+        borderwidth=2,
+        font=dict(size=16, color="#002F6C", family="Arial Black") 
+    )
     
     plot_html = pio.to_html(fig, full_html=False)
     
@@ -543,7 +556,7 @@ def szenarien():
                              no_data=True,
                              results=None)
     
-    # Szenarien-Definitionen (Faktoren auf Units und Kosten)
+    # Szenarien-Definitionen 
     szenarien_params = {
         "Pessimistisch": {
             "units_faktor": 0.7,
@@ -557,14 +570,14 @@ def szenarien():
             "preis_faktor": 1.0,
             "fixkosten_faktor": 1.0,
             "varkosten_faktor": 1.0,
-            "color": "#FFB74D"
+            "color": "#779FB5"
         },
         "Optimistisch": {
             "units_faktor": 1.3,
             "preis_faktor": 1.05,
             "fixkosten_faktor": 0.95,
             "varkosten_faktor": 0.90,
-            "color": "#81C784"
+            "color": "#A8C7DC"
         }
     }    
     # Jahre sammeln
@@ -648,7 +661,7 @@ def szenarien():
             "color": params["color"]
         }
     
-    # Plotly Figure
+    # Plotly
     fig = go.Figure()
     
     for szenario_name, ergebnis in szenarien_ergebnisse.items():
@@ -725,7 +738,7 @@ def export_csv():
         jahr_auswahl_int = int(jahr_auswahl)
         daten_gefiltert = [d for d in daten if int(d.get("jahr", 0)) == jahr_auswahl_int]
     
-    # Daten berechnen (gleiche Logik wie monatsdaten)
+    # Daten berechnen 
     daten_berechnet = []
     for d in daten_gefiltert:
         monat = d.get("monat")

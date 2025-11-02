@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+{% block title %}Startseite{% endblock %}
+{% block content %}
+
+<div class="form-section">
+  <h2>Monatliche Finanzplanung</h2>
+  
+  <form action="/calculate" method="post" class="planning-form">
+    <div class="form-grid">
+      <!-- Zeitraum -->
+      <fieldset class="form-group">
+        <legend>Zeitraum</legend>
+        <div class="input-row">
+          <div class="input-group">
+            <label>Jahr</label>
+            <select name="jahr" required>
+              {% for y in range(2023, 2031) %}
+                <option value="{{ y }}" {% if y == current_year %}selected{% endif %}>{{ y }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Monat</label>
+            <select name="month" required>
+              <option>Januar</option><option>Februar</option><option>März</option><option>April</option>
+              <option>Mai</option><option>Juni</option><option>Juli</option><option>August</option>
+              <option>September</option><option>Oktober</option><option>November</option><option>Dezember</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Verkauf -->
+      <fieldset class="form-group">
+        <legend>Verkauf</legend>
+        <div class="input-group">
+          <label>Verkaufte Einheiten (Implantate)</label>
+          <input type="number" name="units" required min="0" >
+        </div>
+        <div class="input-group">
+          <label>Verkaufspreis pro Einheit (€)</label>
+          <input type="number" name="price" step="0.01" required min="0" >
+        </div>
+      </fieldset>
+
+      <!-- Kosten -->
+      <fieldset class="form-group">
+        <legend>Kosten</legend>
+        <div class="input-group">
+          <label>Fixkosten (€/Monat)</label>
+          <input type="number" name="fixed_costs" step="0.01" required min="0" >
+          <small>Miete, Versicherungen, Marketing etc.</small>
+        </div>
+        <div class="input-group">
+          <label>Variable Kosten pro Einheit (€)</label>
+          <input type="number" name="variable_costs" step="0.01" required min="0" >
+          <small>Herstellungskosten, Verpackung etc.</small>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="form-footer">
+      <button type="submit" class="submit-button">
+        Monat berechnen und speichern
+      </button>
+    </div>
+  </form>
+</div>
+
+<style>
+  .form-section {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .form-section h2 {
+    text-align: center;
+    color: #002F6C;
+    margin-bottom: 10px;
+    font-size: 28px;
+  }
+
+  .planning-form {
+    margin-top: 30px;
+  }
+
+  .form-grid {
+    display: grid;
+    gap: 25px;
+  }
+
+  .form-group {
+    border: 2px solid #779FB5;
+    border-radius: 12px;
+    padding: 20px;
+    background: rgba(119, 159, 181, 0.03);
+  }
+
+  .form-group legend {
+    color: #002F6C;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 0 10px;
+  }
+
+  .input-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+
+  .input-group {
+    margin-bottom: 15px;
+  }
+
+  .input-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .input-group label {
+    display: block;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
+
+  .input-group input,
+  .input-group select {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: all 0.2s ease;
+    background: white;
+  }
+
+  .input-group input:focus,
+  .input-group select:focus {
+    outline: none;
+    border-color: #779FB5;
+    box-shadow: 0 0 0 3px rgba(119, 159, 181, 0.1);
+  }
+
+  .input-group small {
+    display: block;
+    font-size: 12px;
+    color: #888;
+    margin-top: 4px;
+  }
+
+  .form-footer {
+    margin-top: 30px;
+    text-align: center;
+  }
+
+  .submit-button {
+    background: linear-gradient(135deg, #779FB5 0%, #002F6C 100%);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(119, 159, 181, 0.3);
+  }
+
+  .submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(119, 159, 181, 0.5);
+  }
+
+  @media (max-width: 768px) {
+    .form-section {
+      max-width: 100%;
+    }
+
+    .input-row {
+      grid-template-columns: 1fr;
+    }
+
+    .submit-button {
+      width: 100%;
+    }
+  }
+</style>
+
+{% endblock %}

@@ -38,5 +38,13 @@
     "startjahr": 2026,
     "endmonat": 6,
     "endjahr": 2027
+  },
+  {
+    "rolle": "Test",
+    "gehalt": 30000.0,
+    "startmonat": 4,
+    "startjahr": 2027,
+    "endmonat": 8,
+    "endjahr": 2028
   }
 ]

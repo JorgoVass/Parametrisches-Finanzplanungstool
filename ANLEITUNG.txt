@@ -1,8 +1,8 @@
 
-  FINANZPLANUNGS-TOOL - ANLEITUNG
+  Finanzplanungs Tool - Anleitung
 _________________________________________________________________
 
-VORAUSSETZUNG (EINMALIG):
+VORAUSSETZUNG:
 Python 3.8 oder höher muss installiert sein
 
 Prüfen: Terminal/CMD öffnen und eingeben: python --version

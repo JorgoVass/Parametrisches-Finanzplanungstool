@@ -3,671 +3,671 @@
     "monat": "Januar",
     "jahr": 2025,
     "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
+    "costs": 28000.0,
+    "profit": -28000.0,
+    "personnel_included": true,
+    "components": {
+      "units": 0,
+      "price": 2000.0,
+      "fixed_costs": 28000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "Februar",
+    "jahr": 2025,
+    "revenue": 0.0,
+    "costs": 28000.0,
+    "profit": -28000.0,
+    "personnel_included": true,
+    "components": {
+      "units": 0,
+      "price": 2000.0,
+      "fixed_costs": 28000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "M\u00e4rz",
+    "jahr": 2025,
+    "revenue": 0.0,
+    "costs": 28000.0,
+    "profit": -28000.0,
+    "personnel_included": true,
+    "components": {
+      "units": 0,
+      "price": 2000.0,
+      "fixed_costs": 28000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "April",
+    "jahr": 2025,
+    "revenue": 0.0,
+    "costs": 33000.0,
+    "profit": -33000.0,
+    "personnel_included": true,
+    "components": {
+      "units": 0,
+      "price": 2000.0,
+      "fixed_costs": 33000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "Mai",
+    "jahr": 2025,
+    "revenue": 0.0,
+    "costs": 33000.0,
+    "profit": -33000.0,
+    "personnel_included": true,
+    "components": {
+      "units": 0,
+      "price": 2000.0,
+      "fixed_costs": 33000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "Juni",
+    "jahr": 2025,
+    "revenue": 0.0,
+    "costs": 118000.0,
+    "profit": -118000.0,
+    "personnel_included": true,
+    "components": {
+      "units": 0,
+      "price": 2000.0,
+      "fixed_costs": 118000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "Juli",
+    "jahr": 2025,
+    "revenue": 0.0,
+    "costs": 38000.0,
+    "profit": -38000.0,
+    "personnel_included": true,
+    "components": {
+      "units": 0,
+      "price": 2000.0,
+      "fixed_costs": 38000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "August",
+    "jahr": 2025,
+    "revenue": 0.0,
+    "costs": 38000.0,
+    "profit": -38000.0,
+    "personnel_included": true,
+    "components": {
+      "units": 0,
+      "price": 2000.0,
+      "fixed_costs": 38000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "September",
+    "jahr": 2025,
+    "revenue": 0.0,
+    "costs": 183000.0,
+    "profit": -183000.0,
+    "personnel_included": true,
+    "components": {
+      "units": 0,
+      "price": 2000.0,
+      "fixed_costs": 183000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "Oktober",
+    "jahr": 2025,
+    "revenue": 0.0,
+    "costs": 43000.0,
+    "profit": -43000.0,
+    "personnel_included": true,
+    "components": {
+      "units": 0,
+      "price": 2000.0,
+      "fixed_costs": 43000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "November",
+    "jahr": 2025,
+    "revenue": 0.0,
+    "costs": 43000.0,
+    "profit": -43000.0,
+    "personnel_included": true,
+    "components": {
+      "units": 0,
+      "price": 2000.0,
+      "fixed_costs": 43000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "Dezember",
+    "jahr": 2025,
+    "revenue": 0.0,
+    "costs": 43000.0,
+    "profit": -43000.0,
+    "personnel_included": true,
+    "components": {
+      "units": 0,
+      "price": 2000.0,
+      "fixed_costs": 43000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "Januar",
+    "jahr": 2026,
+    "revenue": 0.0,
+    "costs": 48000.0,
+    "profit": -48000.0,
+    "personnel_included": true,
+    "components": {
+      "units": 0,
+      "price": 2000.0,
+      "fixed_costs": 48000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "Februar",
+    "jahr": 2026,
+    "revenue": 0.0,
+    "costs": 48000.0,
+    "profit": -48000.0,
+    "personnel_included": true,
+    "components": {
+      "units": 0,
+      "price": 2000.0,
+      "fixed_costs": 48000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "M\u00e4rz",
+    "jahr": 2026,
+    "revenue": 0.0,
+    "costs": 48000.0,
+    "profit": -48000.0,
+    "personnel_included": true,
+    "components": {
+      "units": 0,
+      "price": 2000.0,
+      "fixed_costs": 48000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "April",
+    "jahr": 2026,
+    "revenue": 0.0,
+    "costs": 48000.0,
+    "profit": -48000.0,
+    "personnel_included": true,
+    "components": {
+      "units": 0,
+      "price": 2000.0,
+      "fixed_costs": 48000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "Mai",
+    "jahr": 2026,
+    "revenue": 0.0,
+    "costs": 48000.0,
+    "profit": -48000.0,
+    "personnel_included": true,
+    "components": {
+      "units": 0,
+      "price": 2000.0,
+      "fixed_costs": 48000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "Juni",
+    "jahr": 2026,
+    "revenue": 0.0,
+    "costs": 46800.0,
+    "profit": -468000.0,
+    "personnel_included": true,
+    "components": {
+      "units": 0,
+      "price": 2000.0,
+      "fixed_costs": 468000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "Juli",
+    "jahr": 2026,
+    "revenue": 0.0,
+    "costs": 48000.0,
+    "profit": -48000.0,
+    "personnel_included": true,
+    "components": {
+      "units": 0,
+      "price": 2000.0,
+      "fixed_costs": 48000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "August",
+    "jahr": 2026,
+    "revenue": 0.0,
+    "costs": 143000.0,
+    "profit": -143000.0,
+    "personnel_included": true,
+    "components": {
+      "units": 0,
+      "price": 2000.0,
+      "fixed_costs": 143000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "September",
+    "jahr": 2026,
+    "revenue": 0.0,
+    "costs": 48000.0,
+    "profit": -48000.0,
+    "personnel_included": true,
+    "components": {
+      "units": 0,
+      "price": 2000.0,
+      "fixed_costs": 48000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "Oktober",
+    "jahr": 2026,
+    "revenue": 0.0,
+    "costs": 48000.0,
+    "profit": -48000.0,
+    "personnel_included": true,
+    "components": {
+      "units": 0,
+      "price": 2000.0,
+      "fixed_costs": 48000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "November",
+    "jahr": 2026,
+    "revenue": 0.0,
+    "costs": 113000.0,
+    "profit": -113000.0,
+    "personnel_included": true,
+    "components": {
+      "units": 0,
+      "price": 2000.0,
+      "fixed_costs": 113000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "Dezember",
+    "jahr": 2026,
+    "revenue": 0.0,
+    "costs": 113000.0,
+    "profit": -113000.0,
+    "personnel_included": true,
+    "components": {
+      "units": 0,
+      "price": 2000.0,
+      "fixed_costs": 113000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "Januar",
+    "jahr": 2027,
+    "revenue": 6000.0,
+    "costs": 53060.0,
+    "profit": -47060.0,
     "personnel_included": true,
     "components": {
       "units": 3,
-      "price": 1000.0,
-      "fixed_costs": 15000.0,
+      "price": 2000.0,
+      "fixed_costs": 53000.0,
       "variable_costs": 20.0
     }
   },
   {
     "monat": "Februar",
-    "jahr": 2025,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
+    "jahr": 2027,
+    "revenue": 10000.0,
+    "costs": 53100.0,
+    "profit": -43100.0,
     "personnel_included": true,
     "components": {
       "units": 5,
-      "price": 1000.0,
-      "fixed_costs": 16000.0,
+      "price": 2000.0,
+      "fixed_costs": 53000.0,
       "variable_costs": 20.0
     }
   },
   {
-    "monat": "März",
-    "jahr": 2025,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
+    "monat": "M\u00e4rz",
+    "jahr": 2027,
+    "revenue": 16000.0,
+    "costs": 53160.0,
+    "profit": -37160.0,
     "personnel_included": true,
     "components": {
-      "units": 7,
-      "price": 1000.0,
-      "fixed_costs": 16000.0,
+      "units": 8,
+      "price": 2000.0,
+      "fixed_costs": 53000.0,
       "variable_costs": 20.0
     }
   },
   {
     "monat": "April",
-    "jahr": 2025,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 9,
-      "price": 1050.0,
-      "fixed_costs": 17000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "Mai",
-    "jahr": 2025,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
+    "jahr": 2027,
+    "revenue": 24000.0,
+    "costs": 53240.0,
+    "profit": -29240.0,
     "personnel_included": true,
     "components": {
       "units": 12,
-      "price": 1050.0,
-      "fixed_costs": 17000.0,
+      "price": 2000.0,
+      "fixed_costs": 53000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "Mai",
+    "jahr": 2027,
+    "revenue": 36000.0,
+    "costs": 53360.0,
+    "profit": -17360.0,
+    "personnel_included": true,
+    "components": {
+      "units": 18,
+      "price": 2000.0,
+      "fixed_costs": 53000.0,
       "variable_costs": 20.0
     }
   },
   {
     "monat": "Juni",
-    "jahr": 2025,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 14,
-      "price": 1050.0,
-      "fixed_costs": 18000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "Juli",
-    "jahr": 2025,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 16,
-      "price": 1100.0,
-      "fixed_costs": 18000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "August",
-    "jahr": 2025,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 18,
-      "price": 1100.0,
-      "fixed_costs": 19000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "September",
-    "jahr": 2025,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 20,
-      "price": 1100.0,
-      "fixed_costs": 19000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "Oktober",
-    "jahr": 2025,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 23,
-      "price": 1150.0,
-      "fixed_costs": 20000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "November",
-    "jahr": 2025,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 26,
-      "price": 1150.0,
-      "fixed_costs": 20000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "Dezember",
-    "jahr": 2025,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 30,
-      "price": 1200.0,
-      "fixed_costs": 21000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "Januar",
-    "jahr": 2026,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 33,
-      "price": 1200.0,
-      "fixed_costs": 22000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "Februar",
-    "jahr": 2026,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 36,
-      "price": 1250.0,
-      "fixed_costs": 22000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "März",
-    "jahr": 2026,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
+    "jahr": 2027,
+    "revenue": 50000.0,
+    "costs": 53500.0,
+    "profit": -3500.0,
     "personnel_included": true,
     "components": {
       "units": 25,
-      "price": 1200.0,
-      "fixed_costs": 23000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "April",
-    "jahr": 2026,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 18,
-      "price": 1150.0,
-      "fixed_costs": 24000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "Mai",
-    "jahr": 2026,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 22,
-      "price": 1200.0,
-      "fixed_costs": 24000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "Juni",
-    "jahr": 2026,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 28,
-      "price": 1250.0,
-      "fixed_costs": 25000.0,
+      "price": 2000.0,
+      "fixed_costs": 53000.0,
       "variable_costs": 20.0
     }
   },
   {
     "monat": "Juli",
-    "jahr": 2026,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
+    "jahr": 2027,
+    "revenue": 68000.0,
+    "costs": 53680.0,
+    "profit": 14320.0,
     "personnel_included": true,
     "components": {
-      "units": 20,
-      "price": 1250.0,
-      "fixed_costs": 25000.0,
+      "units": 34,
+      "price": 2000.0,
+      "fixed_costs": 53000.0,
       "variable_costs": 20.0
     }
   },
   {
     "monat": "August",
-    "jahr": 2026,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
+    "jahr": 2027,
+    "revenue": 90000.0,
+    "costs": 53900.0,
+    "profit": 36100.0,
     "personnel_included": true,
     "components": {
-      "units": 26,
-      "price": 1300.0,
-      "fixed_costs": 26000.0,
+      "units": 45,
+      "price": 2000.0,
+      "fixed_costs": 53000.0,
       "variable_costs": 20.0
     }
   },
   {
     "monat": "September",
-    "jahr": 2026,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 35,
-      "price": 1300.0,
-      "fixed_costs": 26000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "Oktober",
-    "jahr": 2026,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 42,
-      "price": 1350.0,
-      "fixed_costs": 27000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "November",
-    "jahr": 2026,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 50,
-      "price": 1350.0,
-      "fixed_costs": 27000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "Dezember",
-    "jahr": 2026,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
+    "jahr": 2027,
+    "revenue": 116000.0,
+    "costs": 54160.0,
+    "profit": 61840.0,
     "personnel_included": true,
     "components": {
       "units": 58,
-      "price": 1400.0,
-      "fixed_costs": 28000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "Januar",
-    "jahr": 2027,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 65,
-      "price": 1450.0,
-      "fixed_costs": 28000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "Februar",
-    "jahr": 2027,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 72,
-      "price": 1450.0,
-      "fixed_costs": 28000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "März",
-    "jahr": 2027,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 80,
-      "price": 1500.0,
-      "fixed_costs": 28000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "April",
-    "jahr": 2027,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 88,
-      "price": 1550.0,
-      "fixed_costs": 28000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "Mai",
-    "jahr": 2027,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 95,
-      "price": 1550.0,
-      "fixed_costs": 28000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "Juni",
-    "jahr": 2027,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 105,
-      "price": 1600.0,
-      "fixed_costs": 28000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "Juli",
-    "jahr": 2027,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 115,
-      "price": 1600.0,
-      "fixed_costs": 28000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "August",
-    "jahr": 2027,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 125,
-      "price": 1650.0,
-      "fixed_costs": 28000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "September",
-    "jahr": 2027,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 138,
-      "price": 1650.0,
-      "fixed_costs": 28000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "Oktober",
-    "jahr": 2027,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 152,
-      "price": 1700.0,
-      "fixed_costs": 28000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "November",
-    "jahr": 2027,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 168,
-      "price": 1750.0,
-      "fixed_costs": 28000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "Dezember",
-    "jahr": 2027,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 185,
-      "price": 1750.0,
-      "fixed_costs": 28000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "Januar",
-    "jahr": 2028,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 202,
-      "price": 1800.0,
-      "fixed_costs": 28000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "Februar",
-    "jahr": 2028,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 218,
-      "price": 1850.0,
-      "fixed_costs": 28000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "März",
-    "jahr": 2028,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 235,
-      "price": 1850.0,
-      "fixed_costs": 29000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "April",
-    "jahr": 2028,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 252,
-      "price": 1900.0,
-      "fixed_costs": 29000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "Mai",
-    "jahr": 2028,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 268,
-      "price": 1950.0,
-      "fixed_costs": 29000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "Juni",
-    "jahr": 2028,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 285,
-      "price": 1950.0,
-      "fixed_costs": 29000.0,
-      "variable_costs": 20.0
-    }
-  },
-  {
-    "monat": "Juli",
-    "jahr": 2028,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
-    "personnel_included": true,
-    "components": {
-      "units": 302,
       "price": 2000.0,
-      "fixed_costs": 30000.0,
+      "fixed_costs": 53000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "Oktober",
+    "jahr": 2027,
+    "revenue": 146000.0,
+    "costs": 54460.0,
+    "profit": 91540.0,
+    "personnel_included": true,
+    "components": {
+      "units": 73,
+      "price": 2000.0,
+      "fixed_costs": 53000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "November",
+    "jahr": 2027,
+    "revenue": 182000.0,
+    "costs": 54820.0,
+    "profit": 127180.0,
+    "personnel_included": true,
+    "components": {
+      "units": 91,
+      "price": 2000.0,
+      "fixed_costs": 53000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "Dezember",
+    "jahr": 2027,
+    "revenue": 224000.0,
+    "costs": 55240.0,
+    "profit": 168760.0,
+    "personnel_included": true,
+    "components": {
+      "units": 112,
+      "price": 2000.0,
+      "fixed_costs": 53000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "Januar",
+    "jahr": 2028,
+    "revenue": 272000.0,
+    "costs": 55720.0,
+    "profit": 216280.0,
+    "personnel_included": true,
+    "components": {
+      "units": 136,
+      "price": 2000.0,
+      "fixed_costs": 53000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "Februar",
+    "jahr": 2028,
+    "revenue": 326000.0,
+    "costs": 56260.0,
+    "profit": 269740.0,
+    "personnel_included": true,
+    "components": {
+      "units": 163,
+      "price": 2000.0,
+      "fixed_costs": 53000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "M\u00e4rz",
+    "jahr": 2028,
+    "revenue": 386000.0,
+    "costs": 56860.0,
+    "profit": 329140.0,
+    "personnel_included": true,
+    "components": {
+      "units": 193,
+      "price": 2000.0,
+      "fixed_costs": 53000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "April",
+    "jahr": 2028,
+    "revenue": 452000.0,
+    "costs": 57520.0,
+    "profit": 394480.0,
+    "personnel_included": true,
+    "components": {
+      "units": 226,
+      "price": 2000.0,
+      "fixed_costs": 53000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "Mai",
+    "jahr": 2028,
+    "revenue": 524000.0,
+    "costs": 58240.0,
+    "profit": 465760.0,
+    "personnel_included": true,
+    "components": {
+      "units": 262,
+      "price": 2000.0,
+      "fixed_costs": 53000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "Juni",
+    "jahr": 2028,
+    "revenue": 602000.0,
+    "costs": 59020.0,
+    "profit": 542980.0,
+    "personnel_included": true,
+    "components": {
+      "units": 301,
+      "price": 2000.0,
+      "fixed_costs": 53000.0,
+      "variable_costs": 20.0
+    }
+  },
+  {
+    "monat": "Juli",
+    "jahr": 2028,
+    "revenue": 686000.0,
+    "costs": 59860.0,
+    "profit": 626140.0,
+    "personnel_included": true,
+    "components": {
+      "units": 343,
+      "price": 2000.0,
+      "fixed_costs": 53000.0,
       "variable_costs": 20.0
     }
   },
   {
     "monat": "August",
     "jahr": 2028,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
+    "revenue": 776000.0,
+    "costs": 60760.0,
+    "profit": 715240.0,
     "personnel_included": true,
     "components": {
-      "units": 320,
-      "price": 2050.0,
-      "fixed_costs": 30000.0,
+      "units": 388,
+      "price": 2000.0,
+      "fixed_costs": 53000.0,
       "variable_costs": 20.0
     }
   },
   {
     "monat": "September",
     "jahr": 2028,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
+    "revenue": 872000.0,
+    "costs": 61720.0,
+    "profit": 810280.0,
     "personnel_included": true,
     "components": {
-      "units": 338,
-      "price": 2050.0,
-      "fixed_costs": 30000.0,
+      "units": 436,
+      "price": 2000.0,
+      "fixed_costs": 53000.0,
       "variable_costs": 20.0
     }
   },
   {
     "monat": "Oktober",
     "jahr": 2028,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
+    "revenue": 974000.0,
+    "costs": 62740.0,
+    "profit": 911260.0,
     "personnel_included": true,
     "components": {
-      "units": 355,
-      "price": 2100.0,
-      "fixed_costs": 30000.0,
+      "units": 487,
+      "price": 2000.0,
+      "fixed_costs": 53000.0,
       "variable_costs": 20.0
     }
   },
   {
     "monat": "November",
     "jahr": 2028,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
+    "revenue": 1082000.0,
+    "costs": 63820.0,
+    "profit": 1018180.0,
     "personnel_included": true,
     "components": {
-      "units": 372,
-      "price": 2150.0,
-      "fixed_costs": 30000.0,
+      "units": 541,
+      "price": 2000.0,
+      "fixed_costs": 53000.0,
       "variable_costs": 20.0
     }
   },
   {
     "monat": "Dezember",
     "jahr": 2028,
-    "revenue": 0.0,
-    "costs": 0.0,
-    "profit": 0.0,
+    "revenue": 1196000.0,
+    "costs": 64960.0,
+    "profit": 1131040.0,
     "personnel_included": true,
     "components": {
-      "units": 390,
-      "price": 2200.0,
-      "fixed_costs": 30000.0,
+      "units": 598,
+      "price": 2000.0,
+      "fixed_costs": 53000.0,
       "variable_costs": 20.0
     }
   }
